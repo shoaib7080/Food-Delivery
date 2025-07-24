@@ -12,6 +12,7 @@ const Navbar = () => {
     setShowUserLogin,
     setSearchQuery,
     searchQuery,
+    getCartCount,
   } = useAppContext();
 
   const logout = async () => {
@@ -70,7 +71,7 @@ const Navbar = () => {
           className="w-6 opacity-80"
         />
         <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
-          3
+          {getCartCount()}
         </button>
       </div>
 
@@ -102,14 +103,26 @@ const Navbar = () => {
         </div>
       )}
 
-      <button
-        onClick={() => setOpen(!open)}
-        aria-label="Menu"
-        className="sm:hidden"
-      >
-        {/* Menu Icon SVG */}
-        <img src={assets.menu_icon} alt="Menu Image" />
-      </button>
+      <div className="flex items-center sm:hidden gap-6">
+        <div
+          className="relative cursor-pointer"
+          onClick={() => navigate("/cart")}
+        >
+          <img
+            src={assets.nav_cart_icon}
+            alt="Cart Image"
+            className="w-6 opacity-80"
+          />
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
+            {getCartCount()}
+          </button>
+        </div>
+
+        <button onClick={() => setOpen(!open)} aria-label="Menu" className="">
+          {/* Menu Icon SVG */}
+          <img src={assets.menu_icon} alt="Menu Image" />
+        </button>
+      </div>
 
       {/* Mobile Menu */}
       {open && (
