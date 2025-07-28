@@ -15,11 +15,11 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
+      type: Array,
       required: true,
     },
     description: {
-      type: String,
+      type: Array,
       required: true,
     },
     offerPrice: {
@@ -28,7 +28,7 @@ const productSchema = new mongoose.Schema(
     },
     inStock: {
       type: Boolean,
-      required: true,
+      default: true,
     },
   },
   { timestamps: true }

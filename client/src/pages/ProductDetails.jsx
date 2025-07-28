@@ -10,6 +10,7 @@ const ProductDetails = () => {
   const product = products.find((product) => product._id === id);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
+
   useEffect(() => {
     if (products.length > 0) {
       let productsCopy = products.slice();
@@ -28,8 +29,7 @@ const ProductDetails = () => {
     product && (
       <div className="mt-12">
         <p>
-          <Link to={"/"}>Home</Link> /<span> Products</span> /
-          <Link to={"/products"}> {product.category}</Link> /
+          <Link to={"/"}>Home</Link> /<Link to={"/products"}> Products</Link> /
           <Link
             to={`/products/${product.category.toLowerCase()}`}
             className="text-indigo-500"
@@ -106,13 +106,14 @@ const ProductDetails = () => {
                   addToCart(product._id);
                   navigate("/cart");
                 }}
-                className="w-full py-3.5 cursor-pointer font-medium bg-primary text-white hover:bg-indigo-600 transition"
+                className="w-full py-3.5 cursor-pointer font-medium bg-primary text-white hover:bg-primary-dull transition"
               >
                 Buy now
               </button>
             </div>
           </div>
         </div>
+        {/* Related products  */}
         <div className="flex flex-col items-center mt-20">
           <div className="flex flex-col items-center w-max">
             <p>Related Products</p>

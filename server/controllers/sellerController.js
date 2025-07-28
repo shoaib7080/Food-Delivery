@@ -1,6 +1,6 @@
 // Login seller : /api/seller/login
 
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 export const sellerLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -9,13 +9,9 @@ export const sellerLogin = async (req, res) => {
       password === process.env.SELLER_PASSWORD &&
       email === process.env.SELLER_EMAIL
     ) {
-      const token = jwt.sign(
-        { id: process.env.SELLER_ID },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "7d",
-        }
-      );
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+      });
 
       res.cookie("sellerToken", token, {
         httpOnly: true, //Prevent JS to access cookie
@@ -33,7 +29,7 @@ export const sellerLogin = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-  } catch {
+  } catch (error) {
     res.json({ success: false, message: error.message });
   }
 };
@@ -41,11 +37,9 @@ export const sellerLogin = async (req, res) => {
 //Seller isAuth : /api/seller/is-auth
 export const isSellerAuth = async (req, res) => {
   try {
-    const { userId } = req.body;
-    const user = { email: process.env.SELLER_EMAIL, name: "Seller" };
-    return res.json({ success: true, user });
+    return res.json({ success: true });
   } catch (error) {
-    res.json({ success: false, message: "Not Authorised" });
+    res.json({ success: false, message: "Not Authorisedss" });
   }
 };
 
@@ -57,7 +51,7 @@ export const sellerLogout = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     });
-    res.json({ success: true, message: "logged out" });
+    res.json({ success: true, message: "Logged out" });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }

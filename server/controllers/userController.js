@@ -98,9 +98,12 @@ export const login = async (req, res) => {
 export const isAuth = async (req, res) => {
   try {
     const { userId } = req.body;
+    console.log("userId from middleware:", userId);
     const user = await User.findById(userId).select("-password");
+    console.log("User found:", user);
     return res.json({ success: true, user });
   } catch (error) {
+    console.log("isAuth error:", error.message);
     res.json({ success: false, message: "Not Authorised" });
   }
 };
