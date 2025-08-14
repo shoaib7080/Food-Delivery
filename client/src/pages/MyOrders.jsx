@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { dummyAddress, dummyOrders } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
 
 const MyOrders = () => {
   const [myOrders, setMyOrders] = useState([]);
+  const { axios, user } = useAppContext();
 
   const fetchMyOrders = async () => {
-    setMyOrders(dummyOrders);
+    try {
+      const { data } = await axios.get("/api/order/user");
+      if (data.success) {
+        setMyOrders(data.orders);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
-    fetchMyOrders();
-  });
+    if (user) {
+      fetchMyOrders();
+    }
+  }, [user]);
 
   return (
     <div className="mt-16 pb-16 ">

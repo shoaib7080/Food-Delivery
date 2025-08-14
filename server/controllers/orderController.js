@@ -14,8 +14,8 @@ export const placeOrderCOD = async (req, res) => {
 
     //Calculate amount
     let amount = await items.reduce(async (acc, item) => {
-      const product = await Product.findById(item.productId);
-      return (await acc) + product.price * item.quantity;
+      const product = await Product.findById(item.product);
+      return (await acc) + product.offerPrice * item.quantity;
     }, 0);
 
     //Add tax
@@ -50,7 +50,7 @@ export const getUserOrders = async (req, res) => {
   }
 };
 
-//Get all orders : /api/order/all
+//Get all orders : /api/order/seller
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({
